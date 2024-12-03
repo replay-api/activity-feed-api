@@ -1,0 +1,33 @@
+@activity_feed_api_HostAddress = http://localhost:4992
+
+### Get Activity Feed
+GET {{activity_feed_api_HostAddress}}/activity-feed/
+Accept: application/json
+
+###
+
+### Create Activity Feed Entry
+POST {{activity_feed_api_HostAddress}}/activity-feed/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "achievement", // or "replay_analysis", "community_discussion"
+  "userId": "user_id",
+  "content": "User achieved a new high score in the game!",
+  "timestamp": "2024-12-01T12:00:00Z"
+}
+
+###
+
+### Get User's Friends Activities
+GET {{activity_feed_api_HostAddress}}/users/{{userId}}/friends-activities/
+Accept: application/json
+
+###
+
+### Get Community Discussions
+GET {{activity_feed_api_HostAddress}}/community-discussions/
+Accept: application/json
+
+###

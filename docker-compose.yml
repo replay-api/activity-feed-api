@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: activity-feed-api
+    image: activity-feed-api:latest
+    build:
+      context: .
+      dockerfile: activity-feed-api/Dockerfile
+    ports:
+      - "4992:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=pgsql;Database=activity-feed-db;Username=activity-feed-db-usr;Password=activity-feed-db-pwd
+    depends_on:
+      - pgsql
+    networks:
+      - backend
+
+  pgsql:
+    image: postgres:latest
+    container_name: pgsql
+    environment:
+      POSTGRES_DB: activity-feed-db
+      POSTGRES_USER: activity-feed-db-usr
+      POSTGRES_PASSWORD: activity-feed-db-pwd
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
